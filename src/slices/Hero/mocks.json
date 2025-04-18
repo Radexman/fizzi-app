@@ -1,0 +1,101 @@
+[
+  {
+    "__TYPE__": "SharedSliceContent",
+    "variation": "default",
+    "primary": {
+      "heading": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "heading1",
+            "content": {
+              "text": "Layers"
+            }
+          }
+        ]
+      },
+      "subheading": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Nulla reprehenderit proident velit anim incididunt exercitation sit cillum nulla magna nostrud ea. Cillum elit dolor anim est deserunt. Reprehenderit proident ea fugiat occaecat laboris."
+            }
+          }
+        ]
+      },
+      "body": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Eiusmod adipisicing ad aute laborum nisi pariatur nostrud dolor excepteur consectetur exercitation minim Lorem ad eiusmod. Enim culpa nulla est ad."
+            }
+          }
+        ]
+      },
+      "button_text": {
+        "__TYPE__": "FieldContent",
+        "value": "sat",
+        "type": "Text"
+      },
+      "button_link": {
+        "key": "04e5c8a9-cdf4-4179-b027-0890a69f9bb0",
+        "__TYPE__": "LinkContent",
+        "value": {
+          "__TYPE__": "ExternalLink",
+          "url": "http://twitter.com",
+          "text": "layers"
+        }
+      },
+      "cans_image": {
+        "origin": {
+          "id": "main",
+          "url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
+          "width": 4024,
+          "height": 4024
+        },
+        "url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
+        "width": 4024,
+        "height": 4024,
+        "edit": {
+          "zoom": 1,
+          "crop": {
+            "x": 0,
+            "y": 0
+          },
+          "background": "transparent"
+        },
+        "alt": "swam",
+        "credits": null,
+        "__TYPE__": "ImageContent",
+        "thumbnails": {}
+      },
+      "second_heading": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "heading2",
+            "content": {
+              "text": "Metal"
+            }
+          }
+        ]
+      },
+      "second_body": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Voluptate reprehenderit amet cillum et ipsum duis labore incididunt est. Quis excepteur ea ipsum labore est sint mollit aliqua aute occaecat velit cupidatat. Incididunt ex duis incididunt exercitation cillum sint ut culpa voluptate enim nisi nulla aliquip consequat officia."
+            }
+          }
+        ]
+      }
+    },
+    "items": []
+  }
+]
