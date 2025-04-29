@@ -72,11 +72,13 @@ export default function Scene() {
       },
     });
 
-    introTl
-      .from(canOneGroupRef.current.position, { y: -5, x: 1 }, 0)
-      .from(canOneGroupRef.current.rotation, { z: 3 }, 0)
-      .from(canTwoGroupRef.current.position, { y: 5, x: 1 }, 0)
-      .from(canTwoGroupRef.current.rotation, { z: 3 }, 0);
+    if (window.scrollY < 20) {
+      introTl
+        .from(canOneGroupRef.current.position, { y: -5, x: 1 }, 0)
+        .from(canOneGroupRef.current.rotation, { z: 3 }, 0)
+        .from(canTwoGroupRef.current.position, { y: 5, x: 1 }, 0)
+        .from(canTwoGroupRef.current.rotation, { z: 3 }, 0);
+    }
 
     const scrollTl = gsap.timeline({
       defaults: {
