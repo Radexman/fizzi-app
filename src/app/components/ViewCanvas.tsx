@@ -16,7 +16,7 @@ const ViewCanvas = () => {
         zIndex: 30,
       }}
       shadows
-      dpr={Math.min(devicePixelRatio, 2)}
+      dpr={2}
       gl={{ antialias: true }}
       camera={{
         fov: 30,

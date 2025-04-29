@@ -1,16 +1,17 @@
 "use client";
 
 import { useRef } from "react";
-import { Environment, OrbitControls } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import { Group } from "three";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
 
 import FloatingCan from "@/app/components/FloatingCan";
 
 const FLOAT_SPEED = 1.5;
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function Scene() {
   const canOneRef = useRef<Group>(null);
@@ -72,35 +73,51 @@ export default function Scene() {
     });
 
     introTl
-      .from(
-        canOneGroupRef.current.position,
-        {
-          y: -5,
-          x: 1,
-        },
-        0,
-      )
-      .from(
-        canOneGroupRef.current.rotation,
-        {
-          z: 3,
-        },
-        0,
-      )
-      .from(
-        canTwoGroupRef.current.position,
-        {
-          y: 5,
-          x: 1,
-        },
-        0,
-      )
-      .from(
-        canTwoGroupRef.current.rotation,
-        {
-          z: 3,
-        },
-        0,
+      .from(canOneGroupRef.current.position, { y: -5, x: 1 }, 0)
+      .from(canOneGroupRef.current.rotation, { z: 3 }, 0)
+      .from(canTwoGroupRef.current.position, { y: 5, x: 1 }, 0)
+      .from(canTwoGroupRef.current.rotation, { z: 3 }, 0);
+
+    const scrollTl = gsap.timeline({
+      defaults: {
+        duration: 2,
+      },
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.5,
+      },
+    });
+
+    scrollTl
+      // Rotate can group
+      .to(groupRef.current.rotation, { y: Math.PI * 2 })
+
+      // Can one - Black Cherry
+      .to(canOneRef.current.position, { x: -0.2, y: -0.7, z: -2 }, 0)
+      .to(canOneRef.current.rotation, { z: 0.3 }, 0)
+
+      // Can two - Lemon Lime
+      .to(canTwoRef.current.position, { x: 1, y: -0.2, z: -1 }, 0)
+      .to(canTwoRef.current.rotation, { z: 0 }, 0)
+
+      // Can three - Strawberry Lemonade
+      .to(canThreeRef.current.position, { x: -0.3, y: 0.5, z: -1 }, 0)
+      .to(canThreeRef.current.rotation, { z: -0.1 }, 0)
+
+      // Can four - Grape
+      .to(canFourRef.current.position, { x: 0, y: -0.3, z: 0.5 }, 0)
+      .to(canFourRef.current.rotation, { z: 0.3 }, 0)
+
+      // Can five - Watermelon
+      .to(canFiveRef.current.position, { x: 0.3, y: 0.5, z: -0.5 }, 0)
+      .to(canFiveRef.current.rotation, { z: -0.25 }, 0)
+
+      .to(
+        groupRef.current.position,
+        { x: 1, duration: 3, ease: "sine.inOut" },
+        1.3,
       );
   });
 
