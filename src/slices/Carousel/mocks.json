@@ -1,0 +1,31 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"heading": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "heading2",
+						"content": {
+							"text": "Gasoline"
+						}
+					}
+				]
+			},
+			"price_copy": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Exercitation dolore do do labore dolor excepteur et irure laboris dolor est fugiat. Excepteur ipsum aliquip ullamco et nulla adipisicing eiusmod duis sunt deserunt nisi laborum. Veniam veniam ex reprehenderit ullamco eu nisi."
+						}
+					}
+				]
+			}
+		},
+		"items": []
+	}
+]
