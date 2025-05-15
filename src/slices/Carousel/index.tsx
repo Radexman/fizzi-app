@@ -1,6 +1,9 @@
 "use client";
 
-import { FC, useState } from "react";
+import clsx from "clsx";
+import gsap from "gsap";
+import { FC, useRef, useState } from "react";
+import { Group } from "three";
 import { Content } from "@prismicio/client";
 import {
   PrismicRichText,
@@ -9,8 +12,12 @@ import {
 } from "@prismicio/react";
 import { Center, Environment, View } from "@react-three/drei";
 
-import { SodaCanProps } from "@/app/components/SodaCan";
 import FloatingCan from "@/app/components/FloatingCan";
+import ArrowIcon from "@/app/components/ArrowIcon";
+import WavyCircles from "@/app/components/WavyCircles";
+import { SodaCanProps } from "@/app/components/SodaCan";
+
+const SPINS_ON_CHANGE = 8;
 
 const FLAVORS: {
   flavor: SodaCanProps["flavor"];
@@ -38,11 +45,44 @@ export type CarouselProps = SliceComponentProps<Content.CarouselSlice>;
  */
 const Carousel: FC<CarouselProps> = ({ slice }) => {
   const [currentFlavorIndex, setCurrentFlavorIndex] = useState(0);
+  const sodaCanRef = useRef<Group>(null);
 
   function changeFlavor(index: number) {
+    if (!sodaCanRef.current) return;
+
     const nextIndex = (index + FLAVORS.length) % FLAVORS.length;
 
-    setCurrentFlavorIndex(nextIndex);
+    const tl = gsap.timeline();
+
+    tl.to(
+      sodaCanRef.current.rotation,
+      {
+        y:
+          index > currentFlavorIndex
+            ? `-=${Math.PI * 2 * SPINS_ON_CHANGE}`
+            : `+=${Math.PI * 2 * SPINS_ON_CHANGE}`,
+        ease: "power2.inOut",
+        duration: 1,
+      },
+      0,
+    )
+      .to(".background, .wavy-circles-outer, .wavy-circles-inner", {
+        backgroundColor: FLAVORS[nextIndex].color,
+        fill: FLAVORS[nextIndex].color,
+        ease: "power2.inOut",
+        duration: 1,
+      })
+      .to(
+        ".text-wrapper",
+        {
+          duration: 0.2,
+          y: -10,
+          opacity: 0,
+        },
+        0,
+      )
+      .to({}, { onStart: () => setCurrentFlavorIndex(nextIndex) }, 0.5)
+      .to(".text-wrapper", { duration: 0.3, y: 0, opacity: 1 }, 0.7);
   }
 
   return (
@@ -52,21 +92,22 @@ const Carousel: FC<CarouselProps> = ({ slice }) => {
       className="carousel grid-rows-[auto, 4fr, auto] relative grid h-screen justify-center overflow-hidden bg-white py-12 text-white"
     >
       <div className="background pointer-events-none absolute inset-0 bg-[#710523] opacity-50" />
+      <WavyCircles className="absolute top-1/2 left-1/2 h-[120vmin] -translate-x-1/2 -translate-y-1/2 text-[#710523]" />
       <h2 className="relative text-center text-5xl font-bold">
         <PrismicText field={slice.primary.heading} />
       </h2>
-      <div className="flex">
+      <div className="flex items-center">
         {/* Left */}
-        <button
+        <ArrowButton
+          direction="left"
+          label="Previous Flavor"
           onClick={() => changeFlavor(currentFlavorIndex + 1)}
-          className="z-20"
-        >
-          Left
-        </button>
+        />
         {/* Can */}
         <View className="aspect-square h-[70vmin] min-h-40">
           <Center position={[0, 0, 1.5]}>
             <FloatingCan
+              ref={sodaCanRef}
               floatIntensity={0.3}
               rotationIntensity={1}
               flavor={FLAVORS[currentFlavorIndex].flavor}
@@ -80,16 +121,44 @@ const Carousel: FC<CarouselProps> = ({ slice }) => {
           <directionalLight intensity={6} position={[0, 1, 1]} />
         </View>
         {/* Right */}
-        <button
+        <ArrowButton
+          direction="right"
+          label="Next Flavor"
           onClick={() => changeFlavor(currentFlavorIndex - 1)}
-          className="z-20"
-        >
-          Right
-        </button>
+        />
       </div>
-      {/* <PrismicRichText field={slice.primary.price_copy} /> */}
+      <div className="text-area relative mx-auto text-center">
+        <div className="text-wrapper text-4xl font-medium">
+          <p>{FLAVORS[currentFlavorIndex].name}</p>
+        </div>
+        <div className="mt-2 text-2xl font-normal opacity-90">
+          <PrismicRichText field={slice.primary.price_copy} />
+        </div>
+      </div>
     </section>
   );
 };
 
 export default Carousel;
+
+type ArrowButtonProps = {
+  direction?: "right" | "left";
+  label: string;
+  onClick: () => void;
+};
+
+function ArrowButton({
+  direction = "right",
+  label,
+  onClick,
+}: ArrowButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      className="size-12 rounded-full border-2 border-white bg-white/10 p-3 opacity-85 ring-white focus:outline-none focus-visible:opacity-100 focus-visible:ring-4 md:size-16 lg:size-20"
+    >
+      <ArrowIcon className={clsx(direction === "right" && "-scale-x-100")} />
+      <div className="sr-only">{label}</div>
+    </button>
+  );
+}
